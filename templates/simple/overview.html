@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>VSRepo Package Index</title>
+</head>
+<body>
+    {% for project in projects %}
+        <a href="{% url "simple-project" project=project.identifier %}">{{ project.identifier }}</a>
+    {% endfor %}
+</body>
+</html>

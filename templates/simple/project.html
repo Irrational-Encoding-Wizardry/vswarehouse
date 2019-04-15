@@ -1,0 +1,15 @@
+{% load fullurl %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ project.name }}</title>
+</head>
+<body>
+    <h1>Links for {{ project.name }}</h1>
+    {% for release in project.release_set.all %}
+        <a href="{% fullurl "simple-zip" project=project.identifier release=release.release_version %}/{{ project.identifier }}-{{ release.sanitized_pypa_version }}.zip">{{ project.identifier }}-{{ release.sanitized_pypa_version }}.zip</a>
+        <br>
+    {% endfor %}
+</body>
+</html>
