@@ -1,7 +1,7 @@
 import io
 import zipfile
 
-from django.http import FileResponse, Http404
+from django.http import FileResponse, Http404, HttpResponse
 from django.template import loader
 from django.shortcuts import render, get_object_or_404
 
@@ -55,5 +55,4 @@ def zip(request, project, release, filename=None):
     with z.open(directory + "/MANIFEST.in", "w") as f:
         f.write("global-include *.dll\n".encode("utf-8"))
     z.close()
-    result.seek(0)
-    return FileResponse(result, content_type="application/octet-stream")
+    return HttpResponse(result.getvalue(), content_type="application/octet-stream")
