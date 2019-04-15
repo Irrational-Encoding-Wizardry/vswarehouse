@@ -1,0 +1,27 @@
+{% extends "frontend/template.html" %}
+{% load fullurl %}
+
+{% block header %}
+  <a class="navbar-brand" href="{% url "home" %}">Warehouse</a>
+  <i class="material-icons">chevron_right</i>
+  <a class="navbar-brand" href="{% url "impressum" %}">Impressum</a>
+{% endblock %}
+
+{% block content %}
+  <h1 class="project-header">Impressum <small>(Legal notices)</small></h1>
+  <div class="project-description">Information in accordance with Sect. 5 TMG (Germany)</div>
+
+  <section>
+    <h2>Contact Information</h2>
+    <p>
+      Roland Netzsch<br>
+      Feichtetstraße 27<br>
+      82343 Pöcking<br>
+    </p>
+    <p>
+      Tel. +49 176 61093606<br>
+      E-Mail: <a href="mailto:stuxcrystal@encode.moe">stuxcrystal@encode.moe</a><br>
+      Internet-Address: <a href="//encode.moe/yuuno">https://encode.moe/yuuno</a>
+    </p>
+  </section>
+{% endblock %}

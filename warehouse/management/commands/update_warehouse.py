@@ -117,6 +117,7 @@ class Command(BaseCommand):
             project.category = package["category"]
             project.website = package.get("website", "https://github.com/vapoursynth/vsrepo")
             project.name = package["name"]
+            project.description = package["description"]
             project.dependencies = json.dumps(package.get("dependencies", []))
             project.save()
 

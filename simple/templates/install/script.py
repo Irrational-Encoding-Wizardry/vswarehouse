@@ -1,4 +1,4 @@
-{% load fullurl %}
+{% load fullurl pystring %}
 import os
 import json
 import shutil
@@ -88,8 +88,8 @@ else:
     REQUIRES_VAPOURSYNTH = False
 
 {% autoescape off %}
-VSREPO_CONFIGURATION = json.loads("""{{ release.configuration }}""")
-DEPENDENCIES = json.loads("""{{ project.dependencies }}""")
+VSREPO_CONFIGURATION = json.loads("{{ release.configuration|pystring }}")
+DEPENDENCIES = json.loads("{{ project.dependencies|pystring }}")
 {% endautoescape %}
 DEPENDENCIES = [s.lower() for s in DEPENDENCIES]
 
@@ -216,8 +216,8 @@ class VSPlugin(build_py):
 setup(
     name='{{ project.identifier }}',
     version='{{ release.sanitized_pypa_version }}',
-    description="{{ project.description }}",
-    url='{{ project.website }}',
+    description="{{ project.description|pystring }}",
+    url='{{ project.website|pystring }}',
     install_requires = DEPENDENCIES,
     setup_requires = SETUP_DEPENDENCIES,
     cmdclass={

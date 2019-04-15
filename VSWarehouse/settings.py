@@ -45,7 +45,8 @@ INSTALLED_APPS = [
     'fullurl',
 
     'warehouse',
-    'simple'
+    'simple',
+    'frontend'
 ]
 
 MIDDLEWARE = [

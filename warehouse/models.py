@@ -1,3 +1,4 @@
+import natsort
 from django.db import models
 
 
@@ -12,6 +13,12 @@ class Project(models.Model):
     category = models.CharField(max_length=255)
     identifier = models.SlugField(max_length=100)
     dependencies = models.TextField()
+
+    def sorted_releases(self):
+        return list(reversed(natsort.natsorted(self.release_set.all(), key=lambda r: r.sanitized_pypa_version)))
+
+    def latest_release(self):
+        return self.sorted_releases()[0]
 
     class Meta:
         ordering = ["identifier"]

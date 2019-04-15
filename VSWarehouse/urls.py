@@ -16,17 +16,27 @@ Including another URLconf
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.conf import settings
-from django.urls import path
+from django.urls import path, re_path
 
 import simple.views
+import frontend.views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('simple/', simple.views.overview, name="simple-overview"),
+
     path('simple/<project>/', simple.views.project, name="simple-project"),
     path('simple/<project>/<release>.py', simple.views.setup, name="simple-setup"),
     path('simple/<project>/<release>', simple.views.zip, name="simple-zip"),
     path('simple/<project>/<release>/<filename>.zip', simple.views.zip, name="simple-zip"),
+
+    path('', frontend.views.listing, name="home"),
+    path('faq/', frontend.views.static_page, name="faq", kwargs={'tab': 'faq', 'template': 'faq'}),
+    path('impressum/', frontend.views.static_page, name="impressum", kwargs={'tab': 'impressum', 'template': 'impressum'}),
+    path('privacy/', frontend.views.static_page, name="privacy", kwargs={'tab': 'privacy', 'template': 'privacy'}),
+
+    path('plugins/<project>', frontend.views.plugin, name="plugin"),
+    re_path('categories/(?P<category>.*)/', frontend.views.listing, name="category")
 ]
 
 if settings.DEBUG:

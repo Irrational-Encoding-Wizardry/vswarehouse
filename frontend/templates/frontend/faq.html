@@ -1,0 +1,27 @@
+{% extends "frontend/template.html" %}
+
+
+{% block header %}
+  <a class="navbar-brand" href="{% url "home" %}">Warehouse</a>
+  <i class="material-icons">chevron_right</i>
+  <a class="navbar-brand" href="{% url "impressum" %}">F.A.Q.</a>
+{% endblock %}
+
+{% block content %}
+  <h1 class="project-header">Frequently Asked Questions</h1>
+
+  <section>
+    <h2>Why not vsrepo?</h2>
+    <p>vsrepo itself it kinda shit.</p>
+    <ul>
+      <li>vsrepo itself has no IDE support for one.</li>
+      <li>Interoperability with other tools in general?</li>
+      <li><a href="pypa.org">pip</a> is bundled with python and is very, very mature.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Linux anyone?</h2>
+    <p>This thing makes setup.py-files out of the vsutil metadata. Linux is not included unfortunately.</p>
+  </section>
+{% endblock %}

@@ -1,0 +1,42 @@
+{% extends "frontend/template.html" %}
+{% load fullurl %}
+
+{% block header %}
+  <a class="navbar-brand" href="{% url "home" %}">Warehouse</a>
+  {% if tab in categories %}
+    <i class="material-icons">chevron_right</i>
+    <a class="navbar-brand" href="{% url "category" category=tab %}">{{ tab }}</a>
+  {% endif %}
+{% endblock %}
+
+{% block content %}
+  <table class="table table-hover">
+    <thead>
+      <tr><th>Name</th><th></th><th>Category</th><th>Website</th><th></th></tr>
+    </thead>
+    <tbody>
+      {% for project in projects %}
+      <tr>
+        <td>
+          <a href="{% url "plugin" project=project.identifier %}">
+          {{ project.name }} <small>{{ project.latest_release.release_version }}</small>
+          <br>
+          {% if project.type == "VSPlugin" %}
+            <small>{{ project.identifier }}</small>
+          {% else %}
+            <small><i>Python Script</i></small>
+          {% endif %}
+          </a>
+        </td>
+        <td>{{ project.description }}</td>
+        <td><a href="{% url "category" category=project.category %}">{{ project.category }}</a></td>
+        <td><a href="{{ project.website }}" rel="nofollow" target="_blank"><i class="material-icons">language</i></a></td>
+        <td>
+          <a href="#" class="project-installer" data-copy-text="py -3 -m pip install --extra-index-url {% fullurl "simple-overview" %} {{ project.identifier }}":w
+          ><i class="fa fa-copy"></i></a>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}

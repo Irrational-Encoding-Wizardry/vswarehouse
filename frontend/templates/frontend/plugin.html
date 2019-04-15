@@ -1,0 +1,47 @@
+{% extends "frontend/template.html" %}
+{% load fullurl %}
+
+{% block header %}
+  <a class="navbar-brand" href="{% url "home" %}">Warehouse</a>
+  <i class="material-icons">chevron_right</i>
+  <a class="navbar-brand" href="{% url "category" category=tab %}">{{ tab }}</a>
+  <i class="material-icons">chevron_right</i>
+  <a class="navbar-brand" href="{% url "plugin" project=project.identifier %}">{{ project.name }}</a>
+{% endblock %}
+
+
+{% block content %}
+  <div class="clearfix">
+    <div class="float-right">
+      {% if project.type == "VSPlugin" %}
+        <i class="project-type material-icons">memory</i>
+      {% else %}
+        <i class="project-type material-icons">note</i>
+      {% endif %}
+    </div>
+    <h1 class="project-header">{{ project.name }}{% if project.type == "VSPlugin" %} <small>({{ project.identifier }})</small>{% endif %}</h1>
+  </div>
+
+  <div class="clearfix install-command-container">
+    <a href="{{ project.website }}" rel="nofollow" target="_blank" class="float-right material-icons">language</a>
+    <pre class="install-command">pip install <span class="extra-index-url">--extra-index-url {% fullurl "simple-overview" %} </span>{{ project.identifier }}</pre><a href="#" class="project-installer" data-copy-text="py -3 -m pip install --extra-index-url {% fullurl "simple-overview" %} {{ project.identifier }}"><i class="fa fa-copy"></i></a>
+  </div>
+
+  <div class="project-description">
+    {{ project.description }}
+  </div>
+
+  <table class="table table-hover">
+    <thead>
+      <tr><th>Release</th><th>Tag</th><th>Actions</th></tr>
+    </thead>
+    <tbody>
+      {% for release in releases %}
+        <tr><td>{{ release.sanitized_pypa_version }}</td><td>{{ release.release_version }}</td><td>
+          <a href="{% url "simple-setup" project=project.identifier release=release.release_version %}" rel="nofollow" target="_blank"><i class="fa fa-download"></i></a>
+          <a href="#" data-copy-text="py -3 -m pip install --extra-index-url {% fullurl "simple-overview" %} {{ project.identifier }}=={{ release.sanitized_pypa_version }}" class="project-installer"><i class="fa fa-copy"></i></a>
+        </td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}

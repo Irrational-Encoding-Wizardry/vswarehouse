@@ -1,0 +1,56 @@
+{% extends "frontend/template.html" %}
+{% load fullurl %}
+
+{% block header %}
+  <a class="navbar-brand" href="{% url "home" %}">Warehouse</a>
+  <i class="material-icons">chevron_right</i>
+  <a class="navbar-brand" href="{% url "privacy" %}">Privacy Policy</a>
+{% endblock %}
+
+{% block content %}
+  <h1 class="project-header">Privacy Policy</h1>
+
+  <section>
+    <h2>What does this page store?</h2>
+    <p>
+      The following statements are true:
+    </p>
+    <ul>
+      <li>This page stores logs of its page-views.</li>
+      <li>These logs are deleted regularily.</li>
+      <li>In case of a malfunction, the developer of this page may choose to view the logs to find the problem. Log retention may be prolonged in this case.</li>
+      <li>These logs serve an integral purpose in the maintenance of the webpage. (Article 6, Paragraph 1, Point F, GDPR)</li>
+      <li>Our page, by itself, stores a single cookie. An authentication token to ensure the security of this page.<br>This page will not work properly if this cookie is not set.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>What other services are involved while using this page?</h2>
+    <p>
+      The following statements are true (to the best of our knowledge):
+    </p>
+    <ul>
+      <li>This service provides code to download your chosen software. You can review this code by clicking the download link of the release.</li>
+      <li>During install of the software provided by this page, the software is downloaded by third-party servers.</li>
+      <li>Arbitrary code may be executed by the software downloaded through this service.</li>
+      <li>Most downloads go through GitHub. <a href="https://help.github.com/articles/github-privacy-statement/" rel="nofollow" target="_blank">Please refer to this page for their privacy policy.</a></li>
+      <li>
+        We are using CloudFlare.
+
+        <ul>
+          <li>We are using CloudFlare. CloudFlare uses cookies to identify you. <a href="https://www.cloudflare.com/privacypolicy/">Refer to their privacy policy.</a></li>
+          <li>CloudFlare uses cookies to authenticate you so you won't be shown any captchas on your visit.</li>
+          <li>CloudFlare injects code that detects your browser version and injects additional context if you are using an outdated browser.</li>
+        </ul>
+      </li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Can I view what you stored about me?</h2>
+    <p>
+      We don't collect anything about you. All information that could identify you resides on
+      CloudFlare servers. Please refer to them.
+    </p>
+  </section>
+{% endblock %}
