@@ -28,7 +28,8 @@ SECRET_KEY = os.getenv(
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv("WAREHOUSE_DEBUG", "TRUE") == "TRUE"
 
-ALLOWED_HOSTS = []
+if not DEBUG:
+    ALLOWED_HOSTS = os.getenv("WAREHOUSE_HOSTS", '*').split(",")
 
 
 # Application definition
