@@ -48,6 +48,7 @@ h1.project-header > small {
     color: white !important;
 }
 
+
 section {
     color: #aaaaaa !important;
 }
@@ -57,5 +58,15 @@ section {
         position: absolute;
         left: -9999px;
         display: block;
+    }
+}
+
+@media (max-width: 900px) {
+    .footer nav {
+        float: none !important;
+    }
+    .footer nav li {
+        display: block;
+        width: 100%;
     }
 }
