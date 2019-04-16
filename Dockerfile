@@ -2,7 +2,7 @@ FROM python:3.7
 
 RUN pip install supervisor uwsgi
 RUN apt update
-RUN apt install --yes nginx
+RUN apt install --yes nginx p7zip-full
 
 ADD docker/supervisord.conf /etc/supervisord.conf
 ADD docker/nginx.conf /etc/nginx/sites-enabled/default

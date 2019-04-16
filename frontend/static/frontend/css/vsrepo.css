@@ -2,6 +2,12 @@
     margin-top: 50px;
 }
 
+.sidebar .nav p {
+    white-space: normal;
+    max-width: 200px;
+    overflow: hidden;
+}
+
 h1.project-header {
     color: white;
 }
@@ -34,6 +40,10 @@ h1.project-header > small {
     border-left: 0;
 }
 
+.project-link {
+    font-size: 160%;
+}
+
 .project-description {
     padding: 6px;
     margin-bottom: 20px;
@@ -46,6 +56,103 @@ h1.project-header > small {
 
 .footer .active, .nav-link.active {
     color: white !important;
+}
+
+.layout-two-columns {
+    display: flex;
+    flex-direction: row;
+}
+
+.layout-two-columns > * {
+    margin: 1em;
+}
+
+.layout-two-columns .releases {
+    flex-grow: 19;
+    flex-shrink: 19;
+
+    width: 75% !important;
+    height: 75% !important;
+}
+.layout-two-columns .infos {
+    flex-grow: 1;
+    flex-shrink: 1;
+
+    display: flex;
+    flex-direction: column;
+
+    max-width: 25%;
+}
+
+.card-dependencies ul {
+    list-style: none;
+    padding: 0;
+}
+.card-dependencies ul > li {
+    display: block;
+}
+
+.card-dependencies ul > li.none {
+    text-align: center;
+}
+
+ul.distributions {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+ul.distributions > li {
+    display: inline;
+    margin-left: 1em;
+}
+
+ul.distributions > li:first-child {
+    margin-left: 0;
+}
+
+@media (max-width: 1120px) {
+    .layout-two-columns {
+        flex-direction: column;
+    }
+
+    .layout-two-columns > .table {
+        width: 100% !important;
+    }
+
+    .layout-two-columns .infos {
+        flex-direction: row;
+        justify-content: center;
+        max-width: 100% !important;
+    }
+
+    .layout-two-columns .infos > .card {
+        flex-grow: 1;
+        flex-shrink: 1;
+        margin: 1em;
+        max-width: 50%;
+    }
+
+    .card-dependencies ul li {
+        display: inline;
+    }
+
+    .card-dependencies ul li:after {
+        content: ", "
+    }
+
+    .card-dependencies ul li:last-child:after {
+        content: "";
+    }
+}
+
+@media (max-width: 800px) {
+    .layout-two-columns .infos > .card {
+        flex-grow: 1;
+        flex-shrink: 1;
+        margin: 1em;
+        max-width: 100%;
+    }
 }
 
 

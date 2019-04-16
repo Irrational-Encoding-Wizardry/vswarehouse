@@ -1,5 +1,10 @@
+from functools import reduce
+
+import operator
 import natsort
+import json
 from django.db import models
+from django.db.models import Q
 
 
 class Project(models.Model):
@@ -9,7 +14,11 @@ class Project(models.Model):
     name = models.CharField(max_length=255)
     type = models.CharField(max_length=30)
     description = models.TextField()
+
     website = models.CharField(max_length=255)
+    github = models.CharField(max_length=255, blank=True)
+    doom9 = models.CharField(max_length=255, blank=True)
+
     category = models.CharField(max_length=255)
     identifier = models.SlugField(max_length=100)
     dependencies = models.TextField()
@@ -20,6 +29,10 @@ class Project(models.Model):
     def latest_release(self):
         return self.sorted_releases()[0]
 
+    def dependency_list(self):
+        q = reduce(operator.or_, [Q(name__iexact=n) for n in json.loads(self.dependencies)], Q(pk=None))
+        return Project.objects.filter(q)
+
     class Meta:
         ordering = ["identifier"]
 
@@ -27,11 +40,10 @@ class Project(models.Model):
 class Release(models.Model):
     pypa_version = models.CharField(max_length=60)
     release_version = models.CharField(max_length=60)
+    published = models.DateTimeField(null=True)
 
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
     configuration = models.TextField()
-
-    release_url = models.URLField(max_length=100)
 
     @property
     def sanitized_pypa_version(self):
@@ -42,6 +54,6 @@ class Release(models.Model):
 
 
 class Distribution(models.Model):
-    pypa_platform_string = models.CharField(max_length=60)
+    platform = models.CharField(max_length=60)
     release = models.ForeignKey(Release, on_delete=models.CASCADE)
-    file = models.FileField()
+    url = models.URLField(max_length=255, blank=True)
