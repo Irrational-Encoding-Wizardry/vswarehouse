@@ -30,7 +30,7 @@ class Project(models.Model):
         return self.sorted_releases()[0]
 
     def dependency_list(self):
-        q = reduce(operator.or_, [Q(name__iexact=n) for n in json.loads(self.dependencies)], Q(pk=None))
+        q = reduce(operator.or_, [Q(identifier__iexact=n) for n in json.loads(self.dependencies)], Q(pk=None))
         return Project.objects.filter(q)
 
     class Meta:
