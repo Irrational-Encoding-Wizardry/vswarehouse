@@ -30,9 +30,9 @@
           {{ project.name }} <small>{{ project.latest_release.release_version }}</small>
           <br>
           {% if project.type == "VSPlugin" %}
-            <small>{{ project.identifier }}</small>
+            <small class="plugin-title-identifier">{{ project.identifier }}</small>
           {% else %}
-            <small><i>Python Script</i></small>
+            <small class="plugin-title-identifier"><i>Python Script</i></small>
           {% endif %}
           </a>
         </td>

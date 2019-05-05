@@ -11,7 +11,6 @@
     }
     .breadcrumb-container > :first-child {
         display: inline;
-        color: transparent !important;
         font-size: 0;
     }
     .breadcrumb-container > :nth-child(2) {
@@ -22,8 +21,20 @@
         content: "home";
         color: #a9afbb !important;
         font-size: 1.125rem !important;
-
     }
+}
+
+@media (max-width: 400px) {
+    .breadcrumb-container > :first-child::after {
+        display: none;
+    }
+    .breadcrumb-container > :first-child {
+        font-size: 1.125rem;
+    }
+    .breadcrumb-container > :not(:first-child) {
+        display: none !important;
+    }
+
 }
 
 .sidebar .nav p {
@@ -40,18 +51,37 @@ h1.project-header {
     color: white;
 }
 
+h1.project-header, h1.project-header > * {
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
 h1.project-header > small {
     font-size: 60%;
     color: #a9afbbd1;
 }
 
 @media (max-width: 700px) {
+    .project-type-icon .project-type {
+        font-size: 2rem !important;
+
+    }
     h1.project-header {
         font-size: 2rem;
         margin-right: 0.5em;
     }
     h1.project-header > small {
         font-size: 50%;
+    }
+}
+
+@media (max-width: 450px) {
+    h1.project-header > .header-name {
+        font-size: 1.5rem !important;
+    }
+    h1.project-header > .header-identifier {
+        font-size: 45%;
     }
 }
 
@@ -237,6 +267,15 @@ ul.distributions > li:first-child {
     .releases td:nth-child(2), .releases th:nth-child(2) {
         display: none;
     }
+
+    .releases td:nth-child(3), .releases th:nth-child(3) {
+        text-align: center;
+    }
+
+    .releases td:nth-child(4), .releases th:nth-child(4) {
+        text-align: right;
+    }
+
     .releases td:nth-child(5), .releases th:nth-child(5) {
         display: none;
     }
@@ -311,6 +350,25 @@ ul.distributions > li:first-child {
 
     }
 
+}
+
+@media (max-width: 400px) {
+    .plugin-listing .plugin-installer {
+        text-align: right;
+        flex-grow: 1;
+        flex-shrink: 1;
+    }
+
+    .plugin-listing .plugin-category {
+        text-align: center;
+        width: 100%;
+    }
+
+    .plugin-listing .plugin-title-identifier {
+        display: block;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
 }
 
 section {
