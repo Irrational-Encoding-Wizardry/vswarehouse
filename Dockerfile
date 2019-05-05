@@ -10,6 +10,7 @@ ADD docker/update_app.py /app/update_app.py
 ADD docker/start_with_update.sh /app/start_with_update.sh
 ADD docker/boot.sh /boot.sh
 RUN chmod +x /app/start_with_update.sh
+RUN chmod +x /app/boot.sh
 
 ADD . /app
 
