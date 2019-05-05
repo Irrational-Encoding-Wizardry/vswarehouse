@@ -138,6 +138,10 @@ def QueryValueEx(*args, **kwargs):
             project.name = package["name"]
             project.description = package["description"]
             project.dependencies = json.dumps(package.get("dependencies", []))
+
+            if created:
+                project.from_vsutil = True
+
             project.save()
 
             for v, release in enumerate(reversed(package["releases"])):
@@ -170,7 +174,6 @@ def QueryValueEx(*args, **kwargs):
                     d.release = r
                     d.url = dist["url"]
                     d.save()
-
 
     def handle(self, *args, **kwargs):
         repository = self.get_newest_version()

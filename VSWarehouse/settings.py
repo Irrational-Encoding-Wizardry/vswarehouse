@@ -85,12 +85,30 @@ WSGI_APPLICATION = 'VSWarehouse.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+driver = os.environ.get("DB_ENGINE", "sqlite3")
+if driver == "sqlite3":
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+
+            'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        }
     }
-}
+elif driver == "mysql":
+    import platform
+    if platform.system() == "Windows":
+        import pymysql
+        pymysql.install_as_MySQLdb()
+
+    DATABASES = {'default': {
+        'ENGINE': 'django.db.backends.mysql',
+
+        'NAME':     os.getenv('MYSQL_DATABASE'),
+        'USER':     os.getenv('MYSQL_USER'),
+        'HOST':     os.getenv('MYSQL_HOST'),
+        'PASSWORD': os.getenv('MYSQL_PASSWORD'),
+        'PORT':     os.getenv('MYSQL_PORT',    3306)
+    }}
 
 
 # Password validation

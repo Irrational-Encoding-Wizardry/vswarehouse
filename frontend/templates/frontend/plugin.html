@@ -1,6 +1,10 @@
 {% extends "frontend/template.html" %}
 {% load fullurl humanize %}
 
+{% block pagetitle %}
+  VSRepo &mdash; {{ project.name }}
+{% endblock %}
+
 {% block header %}
   <a class="navbar-brand" href="{% url "home" %}">Warehouse</a>
   <i class="material-icons">chevron_right</i>
@@ -11,32 +15,41 @@
 
 
 {% block content %}
-  <div class="clearfix">
+  <div class="clearfix project-page-head project-page-part">
     <div class="float-right">
-      {% if project.type == "VSPlugin" %}
-        <i class="project-type material-icons" title="Plugin">memory</i>
-      {% else %}
-        <i class="project-type material-icons" title="Script">note</i>
-      {% endif %}
+      <div class="project-type-icon">
+        {% if project.type == "VSPlugin" %}
+          <i class="project-type material-icons" title="Plugin">memory</i>
+        {% else %}
+          <i class="project-type material-icons" title="Script">note</i>
+        {% endif %}
+      </div>
+
+      <div class="project-link-container">
+        <a href="{{ project.website }}" rel="nofollow" title="Website" target="_blank" class="project-link fa fa-globe"></a>
+        {% if project.github %}
+          <a href="{{ project.github }}" rel="nofollow" title="GitHub" target="_blank" class="project-link fa fa-github"></a>
+        {% endif %}
+        {% if project.doom9 %}
+          <a href="{{ project.doom9 }}" style="position: relative; top: -2px;" rel="nofollow" title="Doom9" target="_blank" class="project-link fa fa-comment"></a>
+        {% endif %}
+      </div>
     </div>
-    <h1 class="project-header">{{ project.name }}{% if project.type == "VSPlugin" %} <small>({{ project.identifier }})</small>{% endif %}</h1>
+    <h1 class="project-header"><span class="header-name">{{ project.name }}</span>{% if project.type == "VSPlugin" %} <small class="header-identifier">({{ project.identifier }})</small>{% endif %}</h1>
   </div>
 
-  <div class="clearfix install-command-container">
-    <div class="float-right">
-      <a href="{{ project.website }}" rel="nofollow" title="Website" target="_blank" class="project-link fa fa-globe"></a>
-      {% if project.github %}
-        <a href="{{ project.github }}" rel="nofollow" title="GitHub" target="_blank" class="project-link fa fa-github"></a>
-      {% endif %}
-      {% if project.doom9 %}
-        <a href="{{ project.doom9 }}" style="position: relative; top: -2px;" rel="nofollow" title="Doom9" target="_blank" class="project-link fa fa-comment"></a>
+  <div class="clearfix install-command-container project-page-part">
+    <div class="install-command-version">
+      <pre class="install-command">pip install {% if not project.using_pip %}<span class="extra-index-url">--extra-index-url {% fullurl "simple-overview" %} </span>{% endif %}{{ project.identifier }}</pre><a href="#" class="project-installer" data-copy-text="py -3 -m pip install {% if not project.using_pip %}--extra-index-url {% fullurl "simple-overview" %} {% endif %}{{ project.identifier }}"><i class="fa fa-copy"></i></a><br>
+    </div>
+    <div class="install-command-version">
+      {% if project.from_vsutil %}
+        <pre class="install-command">vsrepo install {{ project.identifier }}</pre><a href="#" class="project-installer" data-copy-text="py -3 -m vsrepo install {{ project.identifier }}"><i class="fa fa-copy"></i></a>
       {% endif %}
     </div>
-    <pre class="install-command">pip install <span class="extra-index-url">--extra-index-url {% fullurl "simple-overview" %} </span>{{ project.identifier }}</pre><a href="#" class="project-installer" data-copy-text="py -3 -m pip install --extra-index-url {% fullurl "simple-overview" %} {{ project.identifier }}"><i class="fa fa-copy"></i></a><br>
-    <pre class="install-command">vsrepo install {{ project.identifier }}</pre><a href="#" class="project-installer" data-copy-text="py -3 -m vsrepo install {{ project.identifier }}"><i class="fa fa-copy"></i></a>
   </div>
 
-  <div class="project-description">
+  <div class="project-description project-page-part">
     {{ project.description }}
   </div>
 
@@ -59,23 +72,31 @@
           <td>{{ release.release_version }}</td>
           <td>
             <ul class="distributions">
-              {% for distribution in release.distribution_set.all %}
-                <li><a href="{{ distribution.url }}">
-                  {% if distribution.platform == "script" %}
-                    Python
-                  {% elif distribution.platform == "win32" %}
-                    x86
-                  {% else %}
-                    x64
-                  {% endif %}
-                  <i class="fa fa-download"></i>
-                </a></li>
-              {% endfor %}
+              {% if project.using_pip %}
+                <li><a href="https://pypi.org/project/{{ project.identifier }}/{{ release.sanitized_pypa_version }}/">PyPI <i class="fa fa-external-link-square"></i></a></li>
+              {% endif %}
+
+              {% if project.from_vsutil %}
+                {% for distribution in release.distribution_set.all %}
+                  <li><a href="{{ distribution.url }}">
+                    {% if distribution.platform == "script" %}
+                      Python
+                    {% elif distribution.platform == "win32" %}
+                      x86
+                    {% else %}
+                      x64
+                    {% endif %}
+                    <i class="fa fa-download"></i>
+                  </a></li>
+                {% endfor %}
+              {% endif %}
             </ul>
           </td>
           <td>
+            {% if project.from_vsutil %}
             <a href="{% url "simple-setup" project=project.identifier release=release.release_version %}" rel="nofollow" target="_blank" download="setup.py"><i class="fa fa-code"></i></a>
-            <a href="#" data-copy-text="py -3 -m pip install --extra-index-url {% fullurl "simple-overview" %} {{ project.identifier }}=={{ release.sanitized_pypa_version }}" class="project-installer"><i class="fa fa-copy"></i></a>
+            {% endif %}
+            <a href="#" data-copy-text="py -3 -m pip install  {% if not project.using_pip %}--extra-index-url {% fullurl "simple-overview" %} {% endif %}{{ project.identifier }}=={{ release.sanitized_pypa_version }}" class="project-installer"><i class="fa fa-copy"></i></a>
           </td>
         </tr>
       {% endfor %}

@@ -2,10 +2,38 @@
     margin-top: 50px;
 }
 
+@media (max-width: 700px) {
+    .breadcrumb-container {
+        position: relative;
+    }
+    .breadcrumb-container > :not(:last-child) {
+        display: none;
+    }
+    .breadcrumb-container > :first-child {
+        display: inline;
+        color: transparent !important;
+        font-size: 0;
+    }
+    .breadcrumb-container > :nth-child(2) {
+        display: inline !important;
+    }
+    .breadcrumb-container > :first-child::after {
+        font-family: "Material Icons";
+        content: "home";
+        color: #a9afbb !important;
+        font-size: 1.125rem !important;
+
+    }
+}
+
 .sidebar .nav p {
     white-space: normal;
     max-width: 200px;
     overflow: hidden;
+}
+
+.project-page-head {
+    margin-bottom: 0.5em;
 }
 
 h1.project-header {
@@ -17,17 +45,55 @@ h1.project-header > small {
     color: #a9afbbd1;
 }
 
-.project-type {
+@media (max-width: 700px) {
+    h1.project-header {
+        font-size: 2rem;
+        margin-right: 0.5em;
+    }
+    h1.project-header > small {
+        font-size: 50%;
+    }
+}
+
+@media (max-width: 990px) {
+    .project-page-part {
+        margin-left: 15px;
+        margin-right: 15px;
+    }
+}
+
+.project-type-icon {
+    text-align: right;
+}
+.project-type-icon .project-type {
     font-size: 3.3125rem;
     line-height: 1.15em;
     color: white;
 }
+.project-link-container {
+    margin-right: 0.5em;
+}
 
-.install-command,.install-command-container > .project-installer {
+.install-command-container {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 0.5em;
+}
+.install-command-container > .install-command-version {
+    width: 100%;
+    display: flex;
+    margin-bottom: 0.25em;
+}
+.install-command-version > .install-command {
+    flex-grow: 1;
+    flex-shrink: 1;
+}
+.install-command-version > .install-command,
+.install-command-version > .project-installer {
     color: white;
     font-size: 16px;
     line-height: 16px;
-    border: 1px dashed #a9afbbd1;
+    border: 1px dashed #a9afbb;
     padding: 6px;
     height: 30px;
     display: inline-block;
@@ -146,6 +212,13 @@ ul.distributions > li:first-child {
     }
 }
 
+@media (max-width: 990px) {
+    .layout-two-columns {
+        padding-right: 32px;
+    }
+
+}
+
 @media (max-width: 800px) {
     .layout-two-columns .infos > .card {
         flex-grow: 1;
@@ -155,6 +228,90 @@ ul.distributions > li:first-child {
     }
 }
 
+@media (max-width: 500px) {
+    ul.distributions > li {
+        display: block;
+        margin-left: 0 !important;
+    }
+
+    .releases td:nth-child(2), .releases th:nth-child(2) {
+        display: none;
+    }
+    .releases td:nth-child(5), .releases th:nth-child(5) {
+        display: none;
+    }
+}
+
+@media (max-width: 800px) {
+    .header-name {
+        display: block;
+    }
+
+    .header-identifier {
+        display: block;
+    }
+
+    .plugin-listing {
+        display: block;
+    }
+
+    .plugin-listing > thead {
+        display: none;
+    }
+
+    .plugin-listing > tbody {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .plugin-listing > tbody > tr {
+        display: flex;
+        flex-direction: row;
+        margin: 1em;
+        border: 1px hsla(0, 0%, 71%, 0.1) solid;
+        border-radius: 5px;
+        flex-grow: 1;
+        flex-shrink: 1;
+        flex-wrap: wrap;
+    }
+
+    .plugin-listing > tbody > tr > * {
+        display: block;
+        padding: 0.5em;
+    }
+
+    .plugin-listing .plugin-title {
+        text-align: center;
+        width: 100%;
+        background: linear-gradient(60deg,#7b1fa2,#913f9e);
+        border-top-left-radius: 5px;
+        border-top-right-radius: 5px;
+    }
+
+    .plugin-listing .plugin-title a {
+        display: block;
+    }
+
+    .plugin-listing .plugin-description {
+        width: 100%;
+    }
+
+    .plugin-listing .plugin-category {
+        order: 1;
+        text-align: right;
+        flex-grow: 1;
+        flex-shrink: 1;
+    }
+
+    .plugin-listing .plugin-website  {
+        order: 0;
+    }
+    .plugin-listing .plugin-installer {
+        order: 0;
+
+    }
+
+}
 
 section {
     color: #aaaaaa !important;

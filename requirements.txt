@@ -1,3 +1,5 @@
 requests
 django-fullurl
 natsort
+mysqlclient; platform_system != "Windows"
+PyMySQL; platform_system == "Windows"

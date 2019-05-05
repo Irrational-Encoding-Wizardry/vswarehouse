@@ -23,6 +23,9 @@ class Project(models.Model):
     identifier = models.SlugField(max_length=100)
     dependencies = models.TextField()
 
+    using_pip = models.BooleanField(default=False)
+    from_vsutil = models.BooleanField(default=True)
+
     def sorted_releases(self):
         return list(reversed(natsort.natsorted(self.release_set.all(), key=lambda r: r.sanitized_pypa_version)))
 
@@ -32,6 +35,9 @@ class Project(models.Model):
     def dependency_list(self):
         q = reduce(operator.or_, [Q(identifier__iexact=n) for n in json.loads(self.dependencies)], Q(pk=None))
         return Project.objects.filter(q)
+
+    def __str__(self):
+        return f"{self.name} ({self.identifier})"
 
     class Meta:
         ordering = ["identifier"]

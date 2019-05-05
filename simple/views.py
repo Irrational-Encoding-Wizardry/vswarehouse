@@ -24,7 +24,7 @@ def find_project_fuzzy(project):
 
 
 def overview(request):
-    return render(request, "simple/overview.html", {'projects': Project.objects.all()})
+    return render(request, "simple/overview.html", {'projects': Project.objects.filter(from_vsutil=True)})
 
 
 def project(request, project):
