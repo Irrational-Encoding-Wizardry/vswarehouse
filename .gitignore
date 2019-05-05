@@ -281,3 +281,7 @@ modules.xml
 
 static/
 !*/**/static/
+
+
+volumes/
+production.yml
