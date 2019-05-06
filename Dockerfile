@@ -12,9 +12,10 @@ ADD docker/boot.sh /boot.sh
 RUN chmod +x /app/start_with_update.sh
 RUN chmod +x /boot.sh
 
-ADD . /app
-
+ADD requirements.txt /app
 RUN pip install -r /app/requirements.txt
+
+ADD . /app
 RUN cd /app; python manage.py collectstatic --noinput
 
 EXPOSE 8000

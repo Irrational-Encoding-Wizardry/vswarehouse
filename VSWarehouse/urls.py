@@ -13,10 +13,11 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+import debug_toolbar
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.conf import settings
-from django.urls import path, re_path
+from django.urls import path, re_path, include
 
 import simple.views
 import frontend.views
@@ -35,9 +36,13 @@ urlpatterns = [
     path('impressum/', frontend.views.static_page, name="impressum", kwargs={'tab': 'impressum', 'template': 'impressum'}),
     path('privacy/', frontend.views.static_page, name="privacy", kwargs={'tab': 'privacy', 'template': 'privacy'}),
 
+    path('search/', frontend.views.search, name="search"),
     path('plugins/<project>', frontend.views.plugin, name="plugin"),
     re_path('categories/(?P<category>.*)/', frontend.views.listing, name="category")
 ]
 
 if settings.DEBUG:
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+    urlpatterns += [
+        path('__debug__', include(debug_toolbar.urls))
+    ]

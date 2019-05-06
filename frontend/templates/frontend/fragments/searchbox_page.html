@@ -1,0 +1,18 @@
+<div class="search-box-main {{ extra_classes }}">
+  <div class="search-box-wrap">
+    <form class="form" method="get" action="{% url "search" %}">
+      {% if with_header %}
+        <h3 style="text-align: center" class="custom-wrap"><span>Find the truth</span> <span>about your plugin!</span></h3>
+      {% endif %}
+      <span class="bmd-form-group">
+        <div class="input-group no-border">
+          <input class="form-control" name="q" type="text" placeholder="Find a plugin..." value="{{ query }}">
+          <button class="btn btn-white btn-round btn-just-icon" type="submit">
+          <i class="material-icons">search</i>
+          <div class="ripple-container"></div>
+        </button>
+        </div>
+      </span>
+    </form>
+  </div>
+</div>

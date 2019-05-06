@@ -13,6 +13,14 @@ services:
       MYSQL_PASSWORD: dfksjdfsdkfjhweu
       MYSQL_HOST: db
 
+    links:
+      - db
+      - memcached
+
+  memcached:
+    image: memcached
+    restart: always
+
   db:
     image: mysql
 

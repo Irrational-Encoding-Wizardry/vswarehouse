@@ -1,5 +1,6 @@
 {% extends "frontend/template.html" %}
 {% load fullurl %}
+{% load cache %}
 
 {% block pagetitle %}
   {% if tab in categories %}
@@ -18,37 +19,7 @@
 {% endblock %}
 
 {% block content %}
-  <table class="table table-hover plugin-listing">
-    <thead>
-      <tr><th>Name</th><th></th><th>Category</th><th>Website</th><th></th></tr>
-    </thead>
-    <tbody>
-      {% for project in projects %}
-      <tr>
-        <td class="plugin-title">
-          <a href="{% url "plugin" project=project.identifier %}">
-          {{ project.name }} <small>{{ project.latest_release.release_version }}</small>
-          <br>
-          {% if project.type == "VSPlugin" %}
-            <small class="plugin-title-identifier">{{ project.identifier }}</small>
-          {% else %}
-            <small class="plugin-title-identifier"><i>Python Script</i></small>
-          {% endif %}
-          </a>
-        </td>
-        <td class="plugin-description">{{ project.description }}</td>
-        <td class="plugin-category"><a href="{% url "category" category=project.category %}">{{ project.category }}</a></td>
-        <td class="plugin-website"><a href="{{ project.website }}" rel="nofollow" target="_blank"><i class="material-icons">language</i></a></td>
-        <td class="plugin-installer">
-          <a href="#" class="project-installer" data-copy-text="py -3 -m pip install {% if not project.using_pip %}--extra-index-url {% fullurl "simple-overview" %} {% endif %}{{ project.identifier }}":w
-          ><i class="fa fa-copy"></i></a>
-        </td>
-      </tr>
-      {% empty %}
-      <tr>
-        <td colspan="4" style="text-align: center;"><h1>We are reindexing the database. Please stand by...</h1></td>
-      </tr>
-      {% endfor %}
-    </tbody>
-  </table>
+  {% cache 1800 listing tab %}
+    {% include "frontend/fragments/plugin_table.html" with projects=projects %}
+  {% endcache %}
 {% endblock %}

@@ -1,5 +1,7 @@
 requests
 django-fullurl
 natsort
+django-debug-toolbar
 mysqlclient; platform_system != "Windows"
 PyMySQL; platform_system == "Windows"
+python-memcached; platform_system != "Windows"

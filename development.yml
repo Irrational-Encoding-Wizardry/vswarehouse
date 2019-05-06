@@ -3,3 +3,10 @@ services:
   warehouse:
     ports:
       - 8000:8000
+
+    environment:
+      DB_ENGINE: mysql
+      MYSQL_DATABASE: vswarehouse
+      MYSQL_USER: vswarehouse
+      MYSQL_PASSWORD: dfksjdfsdkfjhweu
+      MYSQL_HOST: db

@@ -1,0 +1,32 @@
+{% extends "frontend/template.html" %}
+
+{% block pagetitle %}
+  {% if query == "" %}
+    VSRepo Search
+  {% else %}
+    VSRepo Search: {{ query }}
+  {% endif %}
+{% endblock %}
+
+{% block header %}
+  <a class="navbar-brand" href="{% url "home" %}">Warehouse</a>
+  <i class="material-icons">chevron_right</i>
+  <a class="navbar-brand" href="{% url "search" %}">Search</a>
+  {% if query != "" %}
+    <i class="material-icons">chevron_right</i>
+  <a class="navbar-brand">{{ query }}</a>
+  {% endif %}
+{% endblock %}
+
+{% block searchbox %}
+  {% include "frontend/fragments/searchbox.html" with query=query %}
+{% endblock %}
+
+{% block content %}
+  {% if query == "" %}
+    {% include "frontend/fragments/searchbox_page.html" with extra_classes="empty_q" query=query with_header="yes" %}
+  {% else %}
+    {% include "frontend/fragments/searchbox_page.html" %}
+    {% include "frontend/fragments/plugin_table.html" with projects=projects nothing_found_text="We didn't find your plugin." %}
+  {% endif %}
+{% endblock %}

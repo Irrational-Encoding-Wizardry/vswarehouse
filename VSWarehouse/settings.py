@@ -30,7 +30,11 @@ DEBUG = os.getenv("WAREHOUSE_DEBUG", "TRUE") == "TRUE"
 
 if not DEBUG:
     ALLOWED_HOSTS = os.getenv("WAREHOUSE_HOSTS", '*').split(",")
-
+else:
+    TOOLBAR_CALLBACK = lambda request: (DEBUG and not request.path.startswith("/simple"))
+    DEBUG_TOOLBAR_CONFIG = {
+        "SHOW_TOOLBAR_CALLBACK": TOOLBAR_CALLBACK
+    }
 
 # Application definition
 
@@ -49,6 +53,8 @@ INSTALLED_APPS = [
     'simple',
     'frontend'
 ]
+if DEBUG:
+    INSTALLED_APPS += ['debug_toolbar']
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -59,6 +65,10 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+if DEBUG:
+    MIDDLEWARE += ["debug_toolbar.middleware.DebugToolbarMiddleware"]
+
+
 
 ROOT_URLCONF = 'VSWarehouse.urls'
 
@@ -129,6 +139,12 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
+        'LOCATION': "memcached:11211"
+    }
+}
 
 # Internationalization
 # https://docs.djangoproject.com/en/2.2/topics/i18n/

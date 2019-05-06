@@ -1,8 +1,11 @@
+import pickle
 from functools import reduce
 
 import operator
 import natsort
 import json
+
+from django.core.cache import cache
 from django.db import models
 from django.db.models import Q
 
@@ -27,7 +30,14 @@ class Project(models.Model):
     from_vsutil = models.BooleanField(default=True)
 
     def sorted_releases(self):
-        return list(reversed(natsort.natsorted(self.release_set.all(), key=lambda r: r.sanitized_pypa_version)))
+        _cache_key = "project.releases.sorted::%s"%self.identifier
+        releases = cache.get(_cache_key)
+        if releases is None:
+            releases = list(reversed(natsort.natsorted(self.release_set.all(), key=lambda r: r.sanitized_pypa_version)))
+            cache.set(_cache_key, pickle.dumps(releases), 1800)
+        else:
+            releases = pickle.loads(releases)
+        return releases
 
     def latest_release(self):
         return self.sorted_releases()[0]

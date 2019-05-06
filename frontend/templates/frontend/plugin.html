@@ -1,5 +1,5 @@
 {% extends "frontend/template.html" %}
-{% load fullurl humanize %}
+{% load fullurl humanize cache %}
 
 {% block pagetitle %}
   VSRepo &mdash; {{ project.name }}
@@ -15,6 +15,7 @@
 
 
 {% block content %}
+  {% cache 1800 detail_page project.identifier %}
   <div class="clearfix project-page-head project-page-part">
     <div class="float-right">
       <div class="project-type-icon">
@@ -120,4 +121,5 @@
       </div>
     </div>
   </div>
+  {% endcache %}
 {% endblock %}
