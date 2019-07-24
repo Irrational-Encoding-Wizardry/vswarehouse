@@ -14,7 +14,7 @@ from warehouse.models import Project, Release, Distribution
 
 DATEREGEX = re.compile("\d{4}-\d{2}-\d{2}")
 PEP440REGEX = re.compile(r"(\d+!)?\d+(\.\d+)*((?:a|b|rc)\d+)?(\.post\d+)?(\.dev\d+)?(\+[a-zA-Z0-9]+)?")
-GITHUB_TOKEN = "3315dc7cd6bfec214c4e6ce50014d3ffa3ac8269"
+GITHUB_TOKEN = os.environ["WAREHOUSE_GITHUB_TOKEN"]
 UA_HEADERS = {
     "User-Agent": "vs-warehouse/0.1.0 https://github.com/stuxcrystal https://github.com/Irrational-Encoding-Wizardry",
     "From": "stuxcrystal@encode.moe"
